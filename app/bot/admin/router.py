@@ -273,7 +273,6 @@ async def close_event_do(cb: CallbackQuery):
 @admin_router.message(StateFilter("*"), F.text == "📚 История событий")
 async def history_events(message: Message, state: FSMContext):
     await state.clear()
-    # последние 30 событий
     with session_scope() as s:
         events = s.query(Event).order_by(Event.id.desc()).limit(30).all()
 
@@ -301,7 +300,6 @@ async def history_event_open(cb: CallbackQuery):
 
         src = "создано вручную"
         if p:
-            # автор/кто одобрил
             author = s.query(User).filter_by(id=p.user_id).one_or_none()
             reviewer = s.query(User).filter_by(id=p.reviewer_id).one_or_none()
             src = (

@@ -8,6 +8,6 @@ class RoleFilter(BaseFilter):
 
     async def __call__(self, event: Message | CallbackQuery) -> bool:
         tg_id = event.from_user.id
-        users_service.get_or_create_user(tg_id, event.from_user.username)  # ensure
+        users_service.get_or_create_user(tg_id, event.from_user.username) 
         role = users_service.get_role(tg_id)
         return role in self.roles
